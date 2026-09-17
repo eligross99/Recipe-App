@@ -54,7 +54,12 @@ occasion actually arrives.
 ## Current status (2026-09-17)
 
 - Next.js app scaffolded. Working branch: `claude/fervent-hypatia-kuhll5`.
-- No product features built yet. Next up: recipe data model + capture UI.
+- **Built:** manual recipe capture. `lib/recipes.ts` is a swappable
+  localStorage-backed reactive store (add/list/delete). Screens: home list
+  (`app/page.tsx`, expandable details + delete) and add form
+  (`app/recipes/new/page.tsx`). Shared header in `app/layout.tsx`.
+- **Next up (MVP features 2–4):** occasion collections view, AI URL extraction
+  (needs Anthropic key), shopping-list generator, sharing (needs Supabase).
 - Accounts: GitHub OK · Supabase (owner checking) · Anthropic Console (todo) ·
   Vercel (todo).
 
