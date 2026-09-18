@@ -34,12 +34,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             >
               🍳 Recipe Manager
             </Link>
-            <Link
-              href="/recipes/new"
-              className="rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-700"
-            >
-              + Add recipe
-            </Link>
+            <nav className="flex items-center gap-4">
+              <Link
+                href="/occasions"
+                className="text-sm font-medium text-amber-900 hover:underline"
+              >
+                Occasions
+              </Link>
+              <Link
+                href="/recipes/new"
+                className="rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-700"
+              >
+                + Add recipe
+              </Link>
+            </nav>
           </div>
         </header>
         <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-8">
