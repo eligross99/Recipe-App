@@ -59,3 +59,21 @@ body {
   background: var(--color-cream);
   color: var(--color-ink);
 }
+
+/* A gentle entrance for each page's content — subtle, not a "loading"
+   effect. Applied to each page's own root element so it re-triggers on
+   every navigation (React mounts a fresh instance per route). */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.35s ease-out both;
+}

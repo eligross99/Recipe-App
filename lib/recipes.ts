@@ -9,6 +9,8 @@
 // `useSyncExternalStore` — the supported way to read a browser store like
 // localStorage without triggering render warnings.
 
+import { addOccasions, backfillFromRecipeTags } from "@/lib/occasions";
+
 export type Recipe = {
   id: string;
   title: string;
@@ -88,6 +90,10 @@ export function getSnapshot(): Recipe[] {
   if (!loaded) {
     cache = sortNewestFirst(loadFromStorage());
     loaded = true;
+    // First read of this store — make sure any occasion tags already on
+    // these recipes are registered in the occasions master list too (see
+    // lib/occasions.ts for why this migration is needed).
+    backfillFromRecipeTags(cache.map((recipe) => recipe.occasions));
   }
   return cache;
 }
@@ -95,6 +101,12 @@ export function getSnapshot(): Recipe[] {
 /** The server has no localStorage, so it always starts empty. */
 export function getServerSnapshot(): Recipe[] {
   return EMPTY;
+}
+
+/** A single recipe by id, or undefined if it doesn't exist (e.g. deleted,
+ * or a stale link). */
+export function getRecipe(id: string): Recipe | undefined {
+  return getSnapshot().find((recipe) => recipe.id === id);
 }
 
 // ---- Mutations ----
@@ -107,7 +119,23 @@ export function addRecipe(input: NewRecipe): Recipe {
     createdAt: Date.now(),
   };
   save([...getSnapshot(), recipe]);
+  addOccasions(recipe.occasions);
   return recipe;
+}
+
+/** Replace an existing recipe's fields (keeping its id and createdAt).
+ * Returns the updated record, or undefined if the id doesn't exist. */
+export function updateRecipe(id: string, input: NewRecipe): Recipe | undefined {
+  const current = getSnapshot();
+  const index = current.findIndex((recipe) => recipe.id === id);
+  if (index === -1) return undefined;
+
+  const updated: Recipe = { ...current[index], ...input };
+  const next = [...current];
+  next[index] = updated;
+  save(next);
+  addOccasions(updated.occasions);
+  return updated;
 }
 
 /** Remove a recipe by id. */

@@ -19,7 +19,7 @@ export default function Home() {
 
   if (recipes.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-border-warm bg-surface/60 p-12 text-center">
+      <div className="animate-fade-up rounded-2xl border border-dashed border-border-warm bg-surface/60 p-12 text-center">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-soft/60">
           <LeafIcon className="h-7 w-7 text-terracotta-deep/70" />
         </div>
@@ -31,7 +31,7 @@ export default function Home() {
         </p>
         <Link
           href="/recipes/new"
-          className="mt-6 inline-block rounded-full bg-terracotta px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-terracotta-deep"
+          className="mt-6 inline-block rounded-full bg-terracotta px-5 py-2.5 text-sm font-medium text-white transition hover:bg-terracotta-deep active:scale-[0.97]"
         >
           + Add your first recipe
         </Link>
@@ -40,7 +40,7 @@ export default function Home() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="animate-fade-up space-y-5">
       <div className="flex items-baseline justify-between">
         <h1 className="font-display text-3xl font-medium text-olive">
           Your recipes

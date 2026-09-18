@@ -10,36 +10,54 @@ type RecipeCardProps = {
 };
 
 // Shared recipe card — used on the home list and every occasion collection
-// page, so they always stay visually identical.
+// page. The whole card links to the recipe's detail page; the Delete button
+// and occasion tags are "islands" that opt back into their own click
+// behavior (see the pointer-events comment below) rather than triggering
+// that navigation.
 export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
   return (
-    <li className="overflow-hidden rounded-2xl border border-border-warm bg-surface shadow-sm shadow-black/[.02]">
-      <CoverImage
-        src={recipe.imageUrl}
-        alt={recipe.title}
-        className="h-48 w-full object-cover"
-        fallback={
-          <div className="flex h-48 w-full items-center justify-center bg-terracotta-soft/40">
-            <LeafIcon className="h-10 w-10 text-terracotta-deep/50" />
-          </div>
-        }
+    <li className="group relative overflow-hidden rounded-2xl border border-border-warm bg-surface shadow-sm shadow-black/[.02] transition-shadow duration-200 hover:shadow-lg hover:shadow-black/[.08]">
+      {/* Full-card click target, underneath everything else (z-0). */}
+      <Link
+        href={`/recipes/${recipe.id}`}
+        className="absolute inset-0 z-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-olive/50"
+        aria-label={`View ${recipe.title}`}
       />
 
-      <div className="p-5">
+      <div className="overflow-hidden">
+        <CoverImage
+          src={recipe.imageUrl}
+          alt={recipe.title}
+          className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          fallback={
+            <div className="flex h-48 w-full items-center justify-center bg-terracotta-soft/40">
+              <LeafIcon className="h-10 w-10 text-terracotta-deep/50" />
+            </div>
+          }
+        />
+      </div>
+
+      {/*
+        pointer-events-none here makes clicks on this whole block (title,
+        meta text, blank padding) pass straight through to the overlay Link
+        above. The Delete button and tag links opt back in with
+        pointer-events-auto so they keep their own click behavior instead.
+      */}
+      <div className="relative z-10 p-5 pointer-events-none">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <h2 className="font-display text-xl font-medium text-ink">
+            <h2 className="font-display text-xl font-medium text-ink transition-colors group-hover:text-terracotta-deep">
               {recipe.title}
             </h2>
             <p className="mt-1 text-xs font-medium uppercase tracking-wide text-ink-soft">
-              Serves {recipe.servings} · {recipe.ingredients.length}{" "}
-              ingredients · {recipe.steps.length} steps
+              Serves {recipe.servings} · {recipe.ingredients.length} ingredients
+              · {recipe.steps.length} steps
             </p>
           </div>
           {onDelete && (
             <button
               onClick={() => onDelete(recipe.id)}
-              className="shrink-0 text-xs font-medium uppercase tracking-wide text-ink-soft transition-colors hover:text-terracotta"
+              className="pointer-events-auto shrink-0 text-xs font-medium uppercase tracking-wide text-ink-soft transition-colors hover:text-terracotta"
               aria-label={`Delete ${recipe.title}`}
             >
               Delete
@@ -48,7 +66,7 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
         </div>
 
         {recipe.occasions.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <div className="pointer-events-auto mt-3 flex flex-wrap gap-1.5">
             {recipe.occasions.map((occasion) => {
               const accent = accentFor(occasion);
               return (
@@ -63,52 +81,6 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
             })}
           </div>
         )}
-
-        <details className="mt-4 border-t border-border-warm pt-3">
-          <summary className="cursor-pointer text-sm font-medium text-olive transition-colors hover:text-olive-deep">
-            View recipe
-          </summary>
-          <div className="mt-4 grid gap-5 sm:grid-cols-2">
-            <div>
-              <h3 className="font-display text-sm font-medium text-olive">
-                Ingredients
-              </h3>
-              {recipe.ingredients.length > 0 ? (
-                <ul className="mt-1.5 list-disc space-y-1 pl-5 text-sm text-ink">
-                  {recipe.ingredients.map((ingredient, i) => (
-                    <li key={i}>{ingredient}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-1.5 text-sm text-ink-soft">None listed.</p>
-              )}
-            </div>
-            <div>
-              <h3 className="font-display text-sm font-medium text-olive">
-                Steps
-              </h3>
-              {recipe.steps.length > 0 ? (
-                <ol className="mt-1.5 list-decimal space-y-1 pl-5 text-sm text-ink">
-                  {recipe.steps.map((step, i) => (
-                    <li key={i}>{step}</li>
-                  ))}
-                </ol>
-              ) : (
-                <p className="mt-1.5 text-sm text-ink-soft">None listed.</p>
-              )}
-            </div>
-          </div>
-          {recipe.sourceUrl && (
-            <a
-              href={recipe.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-block text-xs font-medium uppercase tracking-wide text-terracotta underline decoration-terracotta-soft underline-offset-2"
-            >
-              Original source ↗
-            </a>
-          )}
-        </details>
       </div>
     </li>
   );

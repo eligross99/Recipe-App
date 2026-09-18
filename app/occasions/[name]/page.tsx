@@ -14,11 +14,11 @@ export default function OccasionPage() {
   const matches = recipes.filter((recipe) => recipe.occasions.includes(occasion));
 
   return (
-    <div className="space-y-5">
+    <div className="animate-fade-up space-y-5">
       <div>
         <Link
           href="/occasions"
-          className="text-xs font-medium uppercase tracking-wide text-terracotta hover:text-terracotta-deep"
+          className="text-xs font-medium uppercase tracking-wide text-terracotta transition-colors hover:text-terracotta-deep"
         >
           ← All occasions
         </Link>

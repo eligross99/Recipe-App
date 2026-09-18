@@ -49,7 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </Link>
               <Link
                 href="/recipes/new"
-                className="rounded-full bg-terracotta px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-terracotta-deep"
+                className="rounded-full bg-terracotta px-5 py-2 text-sm font-medium text-white transition hover:bg-terracotta-deep active:scale-[0.97]"
               >
                 + Add recipe
               </Link>

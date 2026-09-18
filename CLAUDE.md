@@ -71,6 +71,32 @@ occasion actually arrives.
   use it instead of a bare `<img>` so failures degrade gracefully. Plain
   `<img>`, not `next/image`, since photos can come from any domain a person
   pastes a link from.
+- **Recipe detail/edit:** `/recipes/[id]` is the read-only detail view (Edit
+  + Delete buttons); `/recipes/[id]/edit` reuses `components/RecipeForm.tsx`
+  (also used by `/recipes/new`) so add/edit stay in sync — only what happens
+  on submit differs, passed in as `onSave`/`submitLabel`/`cancelHref` props.
+  `RecipeCard` is a full-card link to the detail page: an absolutely
+  positioned `<Link>` sits at z-0 behind the content, and the content
+  wrapper is `pointer-events-none` so clicks fall through to it, except the
+  Delete button and occasion tags which opt back in with
+  `pointer-events-auto` so they keep their own behavior. Reuse this pattern
+  for any future "card links somewhere, but has its own interactive bits"
+  case rather than reinventing it.
+- **Occasions are a first-class list**, not just derived from recipe tags:
+  `lib/occasions.ts` (same reactive-store pattern as `lib/recipes.ts`) is
+  the master list, so an occasion can exist with zero recipes (e.g. created
+  via the "+ New occasion" button on `/occasions`). `components/
+  OccasionPicker.tsx` is the tag combobox used by `RecipeForm` — search
+  existing occasions or create a new one inline; selecting/creating always
+  registers it in the master list. A one-time backfill
+  (`backfillFromRecipeTags`) migrates occasion names off existing recipes
+  into this list the first time either store is read, so this shipped
+  without losing any tags recipes already had.
+- **Animation:** `.animate-fade-up` (defined in `globals.css`) on each
+  page's own root element for a subtle entrance — apply it to new pages too.
+  Interactive elements get `transition` + a hover state (color/shadow/scale)
+  and primary buttons get `active:scale-[0.97]` for tactile press feedback;
+  keep it subtle, not applied to every small element.
 
 ## Current status (2026-09-18)
 
@@ -95,8 +121,14 @@ occasion actually arrives.
     graceful fallback (leaf icon / serif initial) when absent or broken.
     Widened the accent palette to terracotta/gold/olive, cycled per
     occasion via `lib/theme.ts`.
+  - Recipe detail view (`/recipes/[id]`) and edit (`/recipes/[id]/edit`),
+    a shared `RecipeForm`, an occasion tag combobox (`OccasionPicker`) with
+    search-existing-or-create-new, occasions promoted to their own stored
+    list (`lib/occasions.ts`) with a "+ New occasion" button on
+    `/occasions`, and an animation pass (page fade-ins, hover/press
+    feedback) — see Conventions above for how each works.
   - Committed on the working branch, **not yet merged** — pending owner's
-    visual sign-off before opening/merging the PR.
+    visual sign-off before opening/merging the PR(s).
 - **Next up (MVP features 1, 3, 4):** AI URL extraction (needs Anthropic key),
   shopping-list generator, sharing (needs Supabase).
 - Accounts: GitHub OK · Vercel OK (deployed) · Supabase (owner checking) ·
