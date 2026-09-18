@@ -23,7 +23,7 @@ export default function OccasionPage() {
           ← All occasions
         </Link>
         <div className="mt-2 flex items-baseline justify-between">
-          <h1 className="font-display text-3xl font-medium text-teal">
+          <h1 className="font-display text-3xl font-medium text-olive">
             {occasion}
           </h1>
           <span className="text-xs font-medium uppercase tracking-wide text-ink-soft">
@@ -39,7 +39,7 @@ export default function OccasionPage() {
           </p>
         </div>
       ) : (
-        <ul className="space-y-4">
+        <ul className="grid gap-6 sm:grid-cols-2">
           {matches.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe} />
           ))}

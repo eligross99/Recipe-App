@@ -14,6 +14,7 @@ export type Recipe = {
   title: string;
   servings: number;
   sourceUrl?: string;
+  imageUrl?: string;
   ingredients: string[];
   steps: string[];
   occasions: string[];

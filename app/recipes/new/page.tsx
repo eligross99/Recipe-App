@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { addRecipe } from "@/lib/recipes";
+import CoverImage from "@/components/CoverImage";
+import { LeafIcon } from "@/components/icons";
 
 const fieldClass =
-  "mt-1.5 w-full rounded-lg border border-border-warm bg-surface px-3.5 py-2.5 text-sm text-ink shadow-sm outline-none placeholder:text-ink-soft/60 focus:border-teal focus:ring-2 focus:ring-teal/15";
+  "mt-1.5 w-full rounded-lg border border-border-warm bg-surface px-3.5 py-2.5 text-sm text-ink shadow-sm outline-none placeholder:text-ink-soft/60 focus:border-olive focus:ring-2 focus:ring-olive/15";
 const labelClass =
   "block text-xs font-medium uppercase tracking-wide text-ink-soft";
 
@@ -23,6 +25,7 @@ export default function NewRecipePage() {
   const [title, setTitle] = useState("");
   const [servings, setServings] = useState("4");
   const [sourceUrl, setSourceUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [steps, setSteps] = useState("");
   const [occasions, setOccasions] = useState("");
@@ -40,6 +43,7 @@ export default function NewRecipePage() {
       title: cleanTitle,
       servings: Number(servings) || 1,
       sourceUrl: sourceUrl.trim() || undefined,
+      imageUrl: imageUrl.trim() || undefined,
       ingredients: splitLines(ingredients),
       steps: splitLines(steps),
       occasions: occasions
@@ -53,7 +57,7 @@ export default function NewRecipePage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl font-medium text-teal">
+      <h1 className="font-display text-3xl font-medium text-olive">
         Add a recipe
       </h1>
       <p className="mt-1.5 text-sm text-ink-soft">
@@ -101,6 +105,34 @@ export default function NewRecipePage() {
               placeholder="https://..."
               className={fieldClass}
             />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="imageUrl" className={labelClass}>
+            Photo URL <span className="normal-case text-ink-soft/70">(optional — paste a link to a photo)</span>
+          </label>
+          <div className="mt-1.5 flex items-center gap-4">
+            <input
+              id="imageUrl"
+              type="url"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              placeholder="https://..."
+              className={`${fieldClass} mt-0 flex-1`}
+            />
+            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border-warm">
+              <CoverImage
+                src={imageUrl.trim() || undefined}
+                alt="Preview"
+                className="h-full w-full object-cover"
+                fallback={
+                  <div className="flex h-full w-full items-center justify-center bg-terracotta-soft/40">
+                    <LeafIcon className="h-5 w-5 text-terracotta-deep/50" />
+                  </div>
+                }
+              />
+            </div>
           </div>
         </div>
 

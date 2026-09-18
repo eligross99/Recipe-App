@@ -33,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <header className="border-b border-border-warm bg-cream">
           <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-6">
             <Link href="/" className="group">
-              <span className="font-display text-2xl font-medium tracking-tight text-teal">
+              <span className="font-display text-2xl font-medium tracking-tight text-olive">
                 Recipe Manager
               </span>
               <span className="block text-[11px] font-medium uppercase tracking-[0.2em] text-ink-soft">
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <nav className="flex items-center gap-5">
               <Link
                 href="/occasions"
-                className="text-sm font-medium uppercase tracking-wide text-ink-soft transition-colors hover:text-teal"
+                className="text-sm font-medium uppercase tracking-wide text-ink-soft transition-colors hover:text-olive"
               >
                 Occasions
               </Link>
