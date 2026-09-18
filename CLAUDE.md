@@ -50,6 +50,27 @@ occasion actually arrives.
 - Import alias `@/` points at the project root.
 - **Next.js 16 is newer than most training data** — heed `AGENTS.md` and check
   `node_modules/next/dist/docs/` before writing framework code.
+- **Design system** ("editorial cookbook" look, in `app/globals.css`): warm
+  cream background, near-black warm ink text, deep olive as the structural
+  accent (headings/links). Three natural accent tones — terracotta / gold /
+  olive — cycle across occasion tags and collection covers via
+  `lib/theme.ts`'s `accentFor(seed)`, so the same occasion name always gets
+  the same tone everywhere. Fraunces (serif, `font-display`) for headlines,
+  recipe titles, and collection-cover initials; Geist (`font-sans`, default)
+  for body/UI text. Meta text (servings, counts, form labels) is small,
+  uppercase, tracked-out. Use the named Tailwind tokens (`bg-cream`,
+  `text-ink`, `text-ink-soft`, `text-olive`, `bg-terracotta`, `bg-gold`,
+  `border-border-warm`, etc.) rather than default Tailwind colors
+  (amber/zinc/teal) so new screens stay visually consistent. No dark mode
+  currently (removed the scaffold default rather than let it clash with the
+  warm palette).
+- **Recipe photos:** `Recipe.imageUrl` (optional) is a pasted photo link, no
+  upload/storage yet. `components/CoverImage.tsx` renders it and falls back
+  to a placeholder (leaf icon on recipe cards, a big serif initial on
+  occasion covers) when there's no URL or the image fails to load — always
+  use it instead of a bare `<img>` so failures degrade gracefully. Plain
+  `<img>`, not `next/image`, since photos can come from any domain a person
+  pastes a link from.
 
 ## Current status (2026-09-18)
 
@@ -67,6 +88,15 @@ occasion actually arrives.
     shows recipes for one occasion. No separate occasion storage — tags
     *are* the collections.
   - Shared header/nav in `app/layout.tsx` (Occasions link + Add recipe).
+  - Full visual restyle to the "editorial cookbook" design system (see
+    Conventions above), applied to every existing screen: warm cream/olive/
+    terracotta palette, Fraunces display font, gallery-grid layouts.
+  - Recipe photos: optional `imageUrl` field, live preview on the add form,
+    graceful fallback (leaf icon / serif initial) when absent or broken.
+    Widened the accent palette to terracotta/gold/olive, cycled per
+    occasion via `lib/theme.ts`.
+  - Committed on the working branch, **not yet merged** — pending owner's
+    visual sign-off before opening/merging the PR.
 - **Next up (MVP features 1, 3, 4):** AI URL extraction (needs Anthropic key),
   shopping-list generator, sharing (needs Supabase).
 - Accounts: GitHub OK · Vercel OK (deployed) · Supabase (owner checking) ·
