@@ -50,6 +50,16 @@ occasion actually arrives.
 - Import alias `@/` points at the project root.
 - **Next.js 16 is newer than most training data** — heed `AGENTS.md` and check
   `node_modules/next/dist/docs/` before writing framework code.
+- **Design system** ("editorial cookbook" look, in `app/globals.css`): warm
+  cream background, near-black warm ink text, deep teal as the structural
+  accent (headings/links), terracotta as the one deliberate CTA/accent color.
+  Fraunces (serif, `font-display`) for headlines and recipe titles; Geist
+  (`font-sans`, default) for body/UI text. Meta text (servings, counts, form
+  labels) is small, uppercase, tracked-out. Use the named Tailwind tokens
+  (`bg-cream`, `text-ink`, `text-ink-soft`, `text-teal`, `bg-terracotta`,
+  `border-border-warm`, etc.) rather than default Tailwind colors (amber/zinc)
+  so new screens stay visually consistent. No dark mode currently (removed
+  the scaffold default rather than let it clash with the warm palette).
 
 ## Current status (2026-09-18)
 
@@ -67,6 +77,10 @@ occasion actually arrives.
     shows recipes for one occasion. No separate occasion storage — tags
     *are* the collections.
   - Shared header/nav in `app/layout.tsx` (Occasions link + Add recipe).
+  - Full visual restyle to the "editorial cookbook" design system (see
+    Conventions above), applied to every existing screen. Committed on the
+    working branch, **not yet merged** — pending owner's visual sign-off
+    before opening/merging the PR.
 - **Next up (MVP features 1, 3, 4):** AI URL extraction (needs Anthropic key),
   shopping-list generator, sharing (needs Supabase).
 - Accounts: GitHub OK · Vercel OK (deployed) · Supabase (owner checking) ·

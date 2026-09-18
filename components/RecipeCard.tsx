@@ -10,21 +10,23 @@ type RecipeCardProps = {
 // page, so they always stay visually identical.
 export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
   return (
-    <li className="rounded-xl border border-amber-200 bg-white p-4 shadow-sm">
+    <li className="rounded-2xl border border-border-warm bg-surface p-5 shadow-sm shadow-black/[.02]">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="font-semibold text-zinc-900">{recipe.title}</h2>
-          <p className="mt-1 text-sm text-zinc-500">
+          <h2 className="font-display text-xl font-medium text-ink">
+            {recipe.title}
+          </h2>
+          <p className="mt-1 text-xs font-medium uppercase tracking-wide text-ink-soft">
             Serves {recipe.servings} · {recipe.ingredients.length} ingredients
             · {recipe.steps.length} steps
           </p>
           {recipe.occasions.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1.5">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {recipe.occasions.map((occasion) => (
                 <Link
                   key={occasion}
                   href={`/occasions/${encodeURIComponent(occasion)}`}
-                  className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 transition-colors hover:bg-amber-200"
+                  className="rounded-full border border-terracotta-soft bg-terracotta-soft px-3 py-0.5 text-xs font-medium text-terracotta-deep transition-colors hover:bg-terracotta hover:text-white"
                 >
                   {occasion}
                 </Link>
@@ -35,7 +37,7 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
         {onDelete && (
           <button
             onClick={() => onDelete(recipe.id)}
-            className="shrink-0 rounded-md px-2 py-1 text-xs text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-600"
+            className="shrink-0 text-xs font-medium uppercase tracking-wide text-ink-soft transition-colors hover:text-terracotta"
             aria-label={`Delete ${recipe.title}`}
           >
             Delete
@@ -43,37 +45,37 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
         )}
       </div>
 
-      <details className="mt-3">
-        <summary className="cursor-pointer text-sm font-medium text-amber-700">
+      <details className="mt-4 border-t border-border-warm pt-3">
+        <summary className="cursor-pointer text-sm font-medium text-teal transition-colors hover:text-teal-deep">
           View recipe
         </summary>
-        <div className="mt-3 grid gap-4 sm:grid-cols-2">
+        <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            <h3 className="font-display text-sm font-medium text-teal">
               Ingredients
             </h3>
             {recipe.ingredients.length > 0 ? (
-              <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm text-zinc-700">
+              <ul className="mt-1.5 list-disc space-y-1 pl-5 text-sm text-ink">
                 {recipe.ingredients.map((ingredient, i) => (
                   <li key={i}>{ingredient}</li>
                 ))}
               </ul>
             ) : (
-              <p className="mt-1 text-sm text-zinc-400">None listed.</p>
+              <p className="mt-1.5 text-sm text-ink-soft">None listed.</p>
             )}
           </div>
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            <h3 className="font-display text-sm font-medium text-teal">
               Steps
             </h3>
             {recipe.steps.length > 0 ? (
-              <ol className="mt-1 list-decimal space-y-0.5 pl-5 text-sm text-zinc-700">
+              <ol className="mt-1.5 list-decimal space-y-1 pl-5 text-sm text-ink">
                 {recipe.steps.map((step, i) => (
                   <li key={i}>{step}</li>
                 ))}
               </ol>
             ) : (
-              <p className="mt-1 text-sm text-zinc-400">None listed.</p>
+              <p className="mt-1.5 text-sm text-ink-soft">None listed.</p>
             )}
           </div>
         </div>
@@ -82,7 +84,7 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
             href={recipe.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-block text-xs font-medium text-amber-700 underline"
+            className="mt-4 inline-block text-xs font-medium uppercase tracking-wide text-terracotta underline decoration-terracotta-soft underline-offset-2"
           >
             Original source ↗
           </a>

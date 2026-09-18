@@ -6,8 +6,9 @@ import { useState } from "react";
 import { addRecipe } from "@/lib/recipes";
 
 const fieldClass =
-  "mt-1 w-full rounded-lg border border-amber-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200";
-const labelClass = "block text-sm font-medium text-zinc-700";
+  "mt-1.5 w-full rounded-lg border border-border-warm bg-surface px-3.5 py-2.5 text-sm text-ink shadow-sm outline-none placeholder:text-ink-soft/60 focus:border-teal focus:ring-2 focus:ring-teal/15";
+const labelClass =
+  "block text-xs font-medium uppercase tracking-wide text-ink-soft";
 
 // Turn a textarea (one item per line) into a clean array.
 function splitLines(value: string): string[] {
@@ -52,13 +53,15 @@ export default function NewRecipePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-amber-900">Add a recipe</h1>
-      <p className="mt-1 text-sm text-zinc-500">
-        Type it in for now — soon you&apos;ll be able to paste a link and let AI
-        fill this out for you.
+      <h1 className="font-display text-3xl font-medium text-teal">
+        Add a recipe
+      </h1>
+      <p className="mt-1.5 text-sm text-ink-soft">
+        Type it in for now — soon you&apos;ll be able to paste a link and let
+        AI fill this out for you.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div>
           <label htmlFor="title" className={labelClass}>
             Title
@@ -68,11 +71,11 @@ export default function NewRecipePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Grandma's apple pie"
-            className={fieldClass}
+            className={`${fieldClass} font-display text-base`}
           />
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor="servings" className={labelClass}>
               Servings
@@ -88,7 +91,7 @@ export default function NewRecipePage() {
           </div>
           <div>
             <label htmlFor="sourceUrl" className={labelClass}>
-              Source URL <span className="text-zinc-400">(optional)</span>
+              Source URL <span className="normal-case text-ink-soft/70">(optional)</span>
             </label>
             <input
               id="sourceUrl"
@@ -103,7 +106,7 @@ export default function NewRecipePage() {
 
         <div>
           <label htmlFor="ingredients" className={labelClass}>
-            Ingredients <span className="text-zinc-400">(one per line)</span>
+            Ingredients <span className="normal-case text-ink-soft/70">(one per line)</span>
           </label>
           <textarea
             id="ingredients"
@@ -117,7 +120,7 @@ export default function NewRecipePage() {
 
         <div>
           <label htmlFor="steps" className={labelClass}>
-            Steps <span className="text-zinc-400">(one per line)</span>
+            Steps <span className="normal-case text-ink-soft/70">(one per line)</span>
           </label>
           <textarea
             id="steps"
@@ -131,7 +134,7 @@ export default function NewRecipePage() {
 
         <div>
           <label htmlFor="occasions" className={labelClass}>
-            Occasions <span className="text-zinc-400">(comma-separated)</span>
+            Occasions <span className="normal-case text-ink-soft/70">(comma-separated)</span>
           </label>
           <input
             id="occasions"
@@ -142,18 +145,18 @@ export default function NewRecipePage() {
           />
         </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-terracotta-deep">{error}</p>}
 
-        <div className="flex items-center gap-3 pt-2">
+        <div className="flex items-center gap-4 pt-2">
           <button
             type="submit"
-            className="rounded-full bg-amber-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-amber-700"
+            className="rounded-full bg-terracotta px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-terracotta-deep"
           >
             Save recipe
           </button>
           <Link
             href="/"
-            className="text-sm font-medium text-zinc-500 hover:text-zinc-800"
+            className="text-sm font-medium text-ink-soft hover:text-ink"
           >
             Cancel
           </Link>
