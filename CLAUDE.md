@@ -51,17 +51,26 @@ occasion actually arrives.
 - **Next.js 16 is newer than most training data** — heed `AGENTS.md` and check
   `node_modules/next/dist/docs/` before writing framework code.
 
-## Current status (2026-09-17)
+## Current status (2026-09-18)
 
 - Next.js app scaffolded. Working branch: `claude/fervent-hypatia-kuhll5`.
-- **Built:** manual recipe capture. `lib/recipes.ts` is a swappable
-  localStorage-backed reactive store (add/list/delete). Screens: home list
-  (`app/page.tsx`, expandable details + delete) and add form
-  (`app/recipes/new/page.tsx`). Shared header in `app/layout.tsx`.
-- **Next up (MVP features 2–4):** occasion collections view, AI URL extraction
-  (needs Anthropic key), shopping-list generator, sharing (needs Supabase).
-- Accounts: GitHub OK · Supabase (owner checking) · Anthropic Console (todo) ·
-  Vercel (todo).
+  PR #1 (scaffold + manual capture) merged to `main`; deployed on Vercel with
+  auto-deploy on every push to `main`.
+- **Built:**
+  - Manual recipe capture. `lib/recipes.ts` is a swappable localStorage-backed
+    reactive store (add/list/delete, `useSyncExternalStore`).
+  - `components/RecipeCard.tsx` — shared card (used by home list + occasion
+    pages) with clickable occasion tags.
+  - Home list (`app/page.tsx`) and add form (`app/recipes/new/page.tsx`).
+  - Occasion collections: `app/occasions/page.tsx` lists distinct occasion
+    tags (derived from recipes, with counts); `app/occasions/[name]/page.tsx`
+    shows recipes for one occasion. No separate occasion storage — tags
+    *are* the collections.
+  - Shared header/nav in `app/layout.tsx` (Occasions link + Add recipe).
+- **Next up (MVP features 1, 3, 4):** AI URL extraction (needs Anthropic key),
+  shopping-list generator, sharing (needs Supabase).
+- Accounts: GitHub OK · Vercel OK (deployed) · Supabase (owner checking) ·
+  Anthropic Console (todo).
 
 ## Working style
 
